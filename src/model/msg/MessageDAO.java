@@ -35,7 +35,9 @@ public class MessageDAO {
 		//전체
 		try {
 			if(memid == null || (memid.equals(""))) { //기본적으로는 message 봄
-				sql="select * from message where rownum <= ? order by day";
+				//select * from (select * from message order by datetime desc) where rownum<=3
+				sql= "select * from (select * from message order by day desc)  where rownum<= ?";
+				//sql="select * from message where rownum <= ? order by day desc";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, mcnt);
 				
@@ -43,7 +45,7 @@ public class MessageDAO {
 			
 			//특정회원
 			else {
-				sql="select * from message where memid=? and rownum <= ? order by day";
+				sql="select * from (select * from message order by day desc) where memid=? and rownum <= ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, memid);
 				pstmt.setInt(2, mcnt);

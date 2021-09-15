@@ -31,15 +31,15 @@
 
 		request.setAttribute("datas", datas);
 		request.setAttribute("newUsers", newUsers);
-		//request.setAttribute("selUser", selUser);
+		request.setAttribute("selUser", selUser);
 		request.setAttribute("mcnt", mcnt);
 
 		pageContext.forward("main.jsp");
 
 	} else if (action.equals("login")) {
 		if (uDAO.login(uVO)) { // 로그인성공
-			session.setAttribute("selUser", uVO.getMemid());
-			response.sendRedirect("control.jsp?action=main");
+			session.setAttribute("seUser", uVO.getMemid());
+			response.sendRedirect(url);
 		} else {
 			out.println("<script>alert('로그인 실패!!! 확인이 필요합니다.');history.go(-1);</script>");
 		}
@@ -49,23 +49,38 @@
 
 	} else if (action.equals("join")) {
 		if (uDAO.insert(uVO)) {
-			out.println("<script>alert('회원가입성공! 메인으로 이동합니다.');</script>");
-			response.sendRedirect("control.jsp?action=main");
+			out.println("<script>alert('회원가입성공!');window.close();</script>");
+			
 		} else {
 			throw new Exception("회원가입 오류 발생");
 		}
 	} else if (action.equals("newMsg")) {
 		if (mDAO.insert(mVO)) {
 			response.sendRedirect(url);
-		}else{
+		} else {
 			throw new Exception("글작성 오류 발생");
 		}
-	}else if(action.equals("newReply")){
-		if(rDAO.insert(rVO)){
-			
+	} else if (action.equals("newReply")) {
+		if (rDAO.insert(rVO)) {
+
 			response.sendRedirect(url);
-		}else{
+		} else {
 			throw new Exception("댓글달기 오류 발생");
 		}
+	} else if (action.equals("delete")) {
+		
+			 if (mDAO.delete(mVO)) {
+				response.sendRedirect(url);
+			} else {
+				throw new Exception("글 삭제 오류 발생");
+			} 
+
+	}else if(action.equals("redelete")){
+		 if (rDAO.delete(rVO)) {
+		response.sendRedirect(url);
+	} else {
+		throw new Exception("댓글 삭제 오류 발생");
+	} 
+
 	}
 %>

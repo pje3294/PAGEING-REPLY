@@ -43,7 +43,7 @@ select * from reply;
 select * from message;
 select * from member;
 
-
+delete from message where mid=8;
 
 insert into member values('timo', '티모', '1234', sysdate);
 insert into message values((select nvl(max(mid),0)+1 from message), 'timo','글작성', 1, 2, sysdate);

@@ -9,7 +9,7 @@ import java.util.Date;
 	rmsg varchar(50),
 	constraint msgrp foreign key (mid) references message (mid) on delete cascade*/
 
-public class ReplyVO {
+public class ReplyVO { 
 	private int rid;
 	private int mid;
 	private String memid;
@@ -48,7 +48,7 @@ public class ReplyVO {
 	}
 	@Override
 	public String toString() {
-		return "ReplyVO [rid=" + rid + ", mid=" + mid + ", memid=" + memid + ", day=" + day + ", rmsg=" + rmsg + "]";
+		return "   ReplyVO [rid=" + rid + ", mid=" + mid + ", memid=" + memid + ", day=" + day + ", rmsg=" + rmsg + "]";
 	}
 	
 	
