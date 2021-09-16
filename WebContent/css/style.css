@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+.content{
+	float: left;
+	width: 70%;
+}
+
+.adver{
+	float. right;
+	
+}
+
+.adver ul{
+	list-style: none;
+}
+
+
+#newList{
+	color: orange;
+	font: italic;
+}

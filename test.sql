@@ -43,6 +43,8 @@ select * from reply;
 select * from message;
 select * from member;
 
+delete from member where memid='sdfsf';
+
 delete from message where mid=8;
 
 insert into member values('timo', '티모', '1234', sysdate);
@@ -58,3 +60,7 @@ insert into message values((select nvl(max(mid),0)+1 from message), 'timo','확인
 insert into message values((select nvl(max(mid),0)+1 from message), 'aa','새로쓴글', 0, 2, sysdate);
 insert into reply values((select nvl(max(rid),0)+1 from reply),3,'aa',sysdate,'댓글3');
 insert into reply values((select nvl(max(rid),0)+1 from reply),3,'timo',sysdate,'댓글3');
+
+
+
+update message set favcount=favcount+1 where mid=6;

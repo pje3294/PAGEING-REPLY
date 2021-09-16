@@ -139,14 +139,17 @@ public class MessageDAO {
 	}
 	
 	public void update(MessageVO vo) {
+		System.out.println("update() 확인");
 		conn = JNDI.getConnection();
-		String sql="update message set favcount= favcount+1 where mid=?";
+		String sql="update message set favcount=favcount+1 where mid=?";
 		
 		try {
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setInt(1, vo.getMid());
-			pstmt.executeUpdate();
+			pstmt.executeUpdate(); 
+			System.out.println("update try문 확인");
 		} catch (SQLException e) {
+			System.out.println("MessageDAO-update 오류 로깅");
 			e.printStackTrace();
 		}finally {
 			JNDI.disconnect(pstmt, conn);
