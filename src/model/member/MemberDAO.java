@@ -20,6 +20,7 @@ public class MemberDAO {
 	ResultSet rs;
 
 	public boolean insert(MemberVO vo) {
+		System.out.println("vo»Æ¿Œ: "+vo);
 		conn = JNDI.getConnection();
 		String sql = "insert into member values (?,?,?,sysdate)";
 		try {

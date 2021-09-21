@@ -31,6 +31,7 @@ public class ReplyDAO {
 		try {
 			conn.setAutoCommit(false);  // Æ®·£Àè¼Ç À§ÇØ ¿ÀÅä Ä¿¹Ô ²ô±â
 			
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, vo.getMid());
 			pstmt.setString(2, vo.getMemid());
@@ -42,6 +43,7 @@ public class ReplyDAO {
 			pstmt.setInt(1, vo.getMid());
 			pstmt.executeUpdate();
 			check = true; // ´ñ±Û »ðÀÔ ¼º°ø & ´ñ±Û ¼ö + 1 ¼º°ø
+		
 			
 			if(check) { 
 				conn.commit();
@@ -63,7 +65,6 @@ public class ReplyDAO {
 	} 
 
 	public boolean delete(ReplyVO vo) { 
-		System.out.println(vo);
 		conn = JNDI.getConnection();
 		String sql = "delete from reply where rid=?";
 		String sql2 ="update message set replycount=replycount-1 where mid=?";

@@ -84,7 +84,6 @@
 		}
 
 	} else if (action.equals("updatelike")) {
-		System.out.println("업데이트컨트롤");
 		mDAO.update(mVO);  
 		response.sendRedirect(url);
 	}

@@ -5,10 +5,11 @@
 	<input type="text" size="25" disabled value="로그인이 필요한 서비스입니다!">
 </c:if>
 <c:if test="${seUser != null}">
-	<form action="control.jsp" method="post">
-		<input type="hidden" name="action" value="newMsg"> <input
-			type="hidden" name="memid" value="${seUser }"> <input
-			type="hidden" name="mcnt" value="${mcnt}">
+	<!-- <form action="control.jsp" method="post">
+		<input type="hidden" name="action" value="newMsg">  -->
+	<form action="newMsg.do" method="post">
+		<input type="hidden" name="memid" value="${seUser }"> 
+		<input type="hidden" name="mcnt" value="${mcnt}">
 		<table border="1">
 			<tr>
 				<td>작성자</td>

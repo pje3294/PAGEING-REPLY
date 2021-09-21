@@ -43,9 +43,15 @@ select * from reply;
 select * from message;
 select * from member;
 
-delete from member where memid='sdfsf';
+delete from member where memid='qq';
+delete from member where memid='bb';
+
 
 delete from message where mid=8;
+delete from message where mid=7;
+delete from message where mid=6;
+delete from message where mid=5;
+delete from message where mid=4;
 
 insert into member values('timo', '티모', '1234', sysdate);
 insert into message values((select nvl(max(mid),0)+1 from message), 'timo','글작성', 1, 2, sysdate);
