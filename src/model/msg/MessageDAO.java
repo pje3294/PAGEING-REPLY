@@ -36,7 +36,7 @@ public class MessageDAO {
 		try {
 			if(memid == null || (memid.equals(""))) { //기본적으로는 message 봄
 				//select * from (select * from message order by datetime desc) where rownum<=3
-				sql= "select * from (select * from message order by day desc)  where rownum<= ?";
+				sql= "SELECT * FROM (SELECT * from message order by day desc)  where rownum<= ?";
 				//sql="select * from message where rownum <= ? order by day desc";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, mcnt);
@@ -139,14 +139,18 @@ public class MessageDAO {
 	}
 	
 	public void update(MessageVO vo) {
+		System.out.println("update() 확인");
 		conn = JNDI.getConnection();
-		String sql="update message set favcount= favcount+1 where mid=?";
+		String sql="update message set favcount=favcount+1 where mid=?";
 		
 		try {
 			pstmt= conn.prepareStatement(sql);
+			//System.out.println(vo.getMid());
 			pstmt.setInt(1, vo.getMid());
-			pstmt.executeUpdate();
+			pstmt.executeUpdate(); 
+			System.out.println("update try문 확인");
 		} catch (SQLException e) {
+			System.out.println("MessageDAO-update 오류 로깅");
 			e.printStackTrace();
 		}finally {
 			JNDI.disconnect(pstmt, conn);

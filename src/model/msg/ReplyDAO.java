@@ -18,11 +18,20 @@ public class ReplyDAO {
 	PreparedStatement pstmt;
 	
 	public boolean insert(ReplyVO vo) {
+		// ¡Úmessage DB¿¡ replyCountµµ 1Áõ°¡µÇ¾ßµÊ  => Æ®·£Àè¼Ç  (insert + update)
+		// ¡ÚUPDATE SET MESSAGE WHERE MID=? -> replycount= replycount+1
+
 		conn = JNDI.getConnection();
 		//insert into reply values((select nvl(max(rid),0)+1 from reply),1,'timo',sysdate,'´ñ±Û1');
 		String sql ="insert into reply values ((select nvl(max(rid),0)+1 from reply), ?,?,sysdate,?)";
+		String sql2= "update message set replycount= replycount+1 where mid=?";
+		
+		boolean check = false;
 		
 		try {
+			conn.setAutoCommit(false);  // Æ®·£Àè¼Ç À§ÇØ ¿ÀÅä Ä¿¹Ô ²ô±â
+			
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, vo.getMid());
 			pstmt.setString(2, vo.getMemid());
@@ -30,33 +39,58 @@ public class ReplyDAO {
 			pstmt.executeUpdate();
 			
 			
-			// message DB¿¡ replyCountµµ 1Áõ°¡µÇ¾ßµÊ
-			String sql2= "update message set replycount= replycount+1 where mid=?";
 			pstmt = conn.prepareStatement(sql2);
 			pstmt.setInt(1, vo.getMid());
 			pstmt.executeUpdate();
-			System.out.println("´ñ±Û¼ö + 1¿Ï·á");
+			check = true; // ´ñ±Û »ðÀÔ ¼º°ø & ´ñ±Û ¼ö + 1 ¼º°ø
+		
 			
+			if(check) { 
+				conn.commit();
+			}else { // ¼º°ø¸øÇÏ¸é,, ·Ñ¹é
+				conn.rollback();
+			}
+			
+			conn.setAutoCommit(true);
 			
 		} catch (SQLException e) {
+			System.out.println("ReplayDAO-insert ¿À·ù ·Î±ë");
 			e.printStackTrace();
-			return false;
 		
 		}finally {
 			JNDI.disconnect(pstmt, conn);
 		}
 		return true;
 		
-	}
-	
-	public boolean delete(ReplyVO vo) {
+	} 
+
+	public boolean delete(ReplyVO vo) { 
 		conn = JNDI.getConnection();
 		String sql = "delete from reply where rid=?";
+		String sql2 ="update message set replycount=replycount-1 where mid=?";
+		
+		// UPDATE SET MESSAGE WHERE MID=? -> replycount= replycount-1
+		
+		boolean check = false;
 		
 		try {
+			conn.setAutoCommit(false); //¿ÀÅäÄ¿¹Ô  ²û
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, vo.getRid());
 			pstmt.executeUpdate();
+			
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setInt(1, vo.getMid());
+			pstmt.executeUpdate();
+			check = true;
+			System.out.println(check);
+			if(check) {
+				conn.commit();
+			}else {
+				conn.rollback();
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

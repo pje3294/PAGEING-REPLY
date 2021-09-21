@@ -20,6 +20,7 @@ public class MemberDAO {
 	ResultSet rs;
 
 	public boolean insert(MemberVO vo) {
+		System.out.println("vo»Æ¿Œ: "+vo);
 		conn = JNDI.getConnection();
 		String sql = "insert into member values (?,?,?,sysdate)";
 		try {
@@ -64,9 +65,9 @@ public class MemberDAO {
 	public ArrayList<MemberVO> selectAll(){
 		ArrayList<MemberVO> datas = new ArrayList<MemberVO>();
 		conn = JNDI.getConnection();
-		String sql = "select * from member order by day desc";
+		String sql = "select * from (select * from member order by day desc) where rownum>=1 and rownum <=3";
 		//String sql = "select * from user order by date desc limit 0,3";
-		
+		//select * from (select * from MESSAGES order by mdate desc) where rownum>=1 and rownum <=3
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();

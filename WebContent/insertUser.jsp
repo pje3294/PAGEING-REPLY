@@ -10,8 +10,9 @@
 
 <h2>회원가입</h2>
 
-<form action="control.jsp" method="post">
-	<input type="hidden" name="action" value="join">
+<!-- <form action="control.jsp" method="post">
+	<input type="hidden" name="action" value="join"> -->
+	<form action="join.do" method="post">
 	<table>
 		<tr>
 			<td>아이디</td>

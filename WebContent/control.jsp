@@ -50,7 +50,7 @@
 	} else if (action.equals("join")) {
 		if (uDAO.insert(uVO)) {
 			out.println("<script>alert('회원가입성공!');window.close();</script>");
-			
+
 		} else {
 			throw new Exception("회원가입 오류 발생");
 		}
@@ -68,19 +68,29 @@
 			throw new Exception("댓글달기 오류 발생");
 		}
 	} else if (action.equals("delete")) {
-		
-			 if (mDAO.delete(mVO)) {
-				response.sendRedirect(url);
-			} else {
-				throw new Exception("글 삭제 오류 발생");
-			} 
 
-	}else if(action.equals("redelete")){
-		 if (rDAO.delete(rVO)) {
+		if (mDAO.delete(mVO)) {
+			response.sendRedirect(url);
+		} else {
+			throw new Exception("글 삭제 오류 발생");
+		}
+
+	} else if (action.equals("redelete")) {
+		System.out.println("redelte 입장");
+		if (rDAO.delete(rVO)) {
+			response.sendRedirect(url);
+		} else {
+			throw new Exception("댓글 삭제 오류 발생");
+		}
+
+	} else if (action.equals("updatelike")) {
+		mDAO.update(mVO);  
 		response.sendRedirect(url);
-	} else {
-		throw new Exception("댓글 삭제 오류 발생");
-	} 
-
 	}
+	
+	
+	
+	
+	
+	
 %>
